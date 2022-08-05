@@ -1,0 +1,52 @@
+<html>  
+    <head>  
+    <meta charset="UTF-8">
+    </head>  
+    <body align="center" >  
+    <h1> CREATE YOUR ACCOUNT</h1>  
+    <table cellspacing="2" align="center" cellpadding="8" border="0">  
+    <tr><td> Name</td>   
+    <td><input type="text" placeholder="Enter your name" id="n1"></td></tr>  
+    <tr><td> Set Password</td>  
+    <td><input type="password" placeholder="Set a password" id="p1"></td></tr>  
+    <tr><td>  
+    <input type="submit" value="Create" onClick="WriteToFile2()"/>  
+    </table>  
+
+
+
+    <script type="text/javascript">
+    function WriteToFile() {
+ 
+    set fso = CreateObject("Scripting.FileSystemObject"); 
+    set s   = fso.CreateTextFile("/home/fabiane/coding/c/file-listener/webserver/filename.txt", True);
+ 
+    var firstName = document.getElementById('n1');
+    var lastName  = document.getElementById('p1');
+
+    s.writeline("First Name :" + n1);
+    s.writeline("Last Name :" + p1);
+    s.Close();
+    }
+    </script>
+
+
+
+    <script type="text/javascript">
+    import * as fs from 'fs';
+    function WriteToFile2() {
+    var files = require('fs').promises;
+    const content = 'this is what i want to write to file'
+
+    files.writeFile('/home/fabiane/coding/c/file-listner/webserver/filename.txt', content, err => {
+      if (err) {
+        console.error(err)
+        return
+      }
+    })
+    }
+    </script>  
+
+
+    </body>  
+</html>  
