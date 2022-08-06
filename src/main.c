@@ -40,7 +40,7 @@ int main(int argc, char **argv){
         	perror ("inotify_init");
 
 	wd = inotify_add_watch(fd,
-        	        "/home/fabiane/coding/c/file-listener/",
+        	        "/tmp/file.txt",
                 	IN_MODIFY | IN_CLOSE_WRITE );
 	if (wd < 0)
         	perror ("inotify_add_watch");

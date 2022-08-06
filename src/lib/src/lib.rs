@@ -44,8 +44,12 @@ pub struct Response {
 
 
 
-pub fn start_webserver_rust(){
-    
+pub fn start_webserver_rust() -> std::io::Result<()> {
+    let listener = TcpListener::bind("127.0.0.1:8080")?;
+        for stream in listener.incoming() {
+            webserver_handle(stream?);
+        }
+        Ok(())    
 }
 
 pub fn webserver_handle(mut stream: TcpStream) {
@@ -155,12 +159,16 @@ impl dyn Rust {
 
 
     #[no_mangle]
-    pub extern "C" fn start_webserver() -> std::io::Result<()>{
-        let listener = TcpListener::bind("127.0.0.1:8080")?;
-        for stream in listener.incoming() {
-            webserver_handle(stream?);
-        }
-        Ok(())
+    pub extern "C" fn start_webserver() -> *mut Response {
+        let _ = match start_webserver_rust() {
+              Ok(s) => s,
+              Err(e) => {
+                  //let err = Error::with_chain(e, "Unable to start rest-api");
+                  update_last_error(e);
+                  return ptr::null_mut();
+              }
+          };
+          return ptr::null_mut()
     }
 
 
